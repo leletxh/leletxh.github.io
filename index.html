@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语文作业</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f9;
+        color: #333;
+        transition: background-color 0.5s ease; /* 背景颜色过渡 */
+    }
+    h1 {
+        color: #2a2a2a;
+        text-align: center;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-in-out forwards; /* 动画效果 */
+    }
+    video {
+        max-width: 100%; /* 视频宽度自适应 */
+        height: auto;
+        margin: 0 auto 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px; /* 圆角 */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 阴影 */
+        animation: fadeInUp 1s ease-in-out forwards; /* 动画效果 */
+    }
+    p {
+        text-align: center;
+        margin: 10px 0;
+        animation: fadeIn 1s ease-in-out forwards; /* 动画效果 */
+    }
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #777;
+        animation: fadeIn 1s ease-in-out 1s forwards; /* 延迟1秒后执行动画 */
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 媒体查询 - 当屏幕宽度小于等于600px时应用以下样式 */
+    @media (max-width: 600px) {
+        body {
+            padding: 10px; /* 减少内边距 */
+        }
+        h1 {
+            font-size: 1.5em; /* 调整标题字体大小 */
+        }
+        video {
+            width: 100%; /* 视频宽度100% */
+        }
+        p {
+            font-size: 0.9em; /* 调整段落字体大小 */
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>语文作业</h1>
+        <!-- 此视频为外部链接，请勿更改 -->
+        <video controls>
+            <source src="http://47.121.178.173:8080/1.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 video 标签。
+        </video>
+        <p>网页服务由GitHub.io提供</p>
+        <p>域名由us.kg提供</p>
+        <p>名称服务器由Cloudflare提供</p>
+        <p>视频使用自己的服务器</p>
+    </div>
+</body>
+</html>
