@@ -151,6 +151,19 @@
         .song-name {
             margin-bottom: 10px;
         }
+        .lyrics {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left; /* 修改为左对齐 */
+            font-weight: bold;
+            display: none; /* Initially hide the lyrics */
+            width: 80%;
+            white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+            overflow-y: auto;
+            max-height: 200px; /* Limit the height and add scrollbar if needed */
+        }
     </style>
 </head>
 <body>
@@ -159,6 +172,9 @@
             <h2>简易音乐搜索播放器</h2>
             <input type="text" id="searchInput" placeholder="请输入歌曲名...">
             <button onclick="searchSongs()">搜索</button>
+            <label for="numSlider">歌曲数量:</label>
+            <input type="range" id="numSlider" min="1" max="99" value="20">
+            <span id="numValue">20</span>
             <ul id="songList" class="song-list"></ul>
         </div>
         <div class="song-details">
@@ -172,10 +188,24 @@
             <div class="audio-controls">
                 <audio id="audioPlayer" controls></audio>
             </div>
+            <div class="lyrics" id="lyricsDisplay"></div> <!-- 新增歌词显示区域 -->
         </div>
     </div>
 
     <script>
+        const numSlider = document.getElementById('numSlider');
+        const numValue = document.getElementById('numValue');
+        let num = parseInt(numSlider.value, 10);
+
+        // 初始化显示默认值
+        numValue.textContent = numSlider.value;
+
+        // 添加事件监听器以更新显示的值和num变量
+        numSlider.addEventListener('input', function() {
+            num = parseInt(numSlider.value, 10);
+            numValue.textContent = numSlider.value;
+        });
+
         async function getImg(id, width = null, height = null) {
             const url = `https://apis.netstart.cn/music/song/detail`;
             const params = new URLSearchParams({ ids: id });
@@ -196,7 +226,6 @@
 
         async function searchSongs() {
             const songName = document.getElementById('searchInput').value;
-            const num = 10;
             const url = "https://apis.netstart.cn/music/cloudsearch";
             const params = new URLSearchParams({ keywords: songName, limit: num });
             try {
@@ -282,6 +311,7 @@
             const audioPlayer = document.getElementById('audioPlayer');
             const songNameElement = document.getElementById('songName');
             const songAuthorsElement = document.getElementById('songAuthors');
+            const lyricsDisplay = document.getElementById('lyricsDisplay'); // 获取歌词显示区域
 
             // Load large icon
             const largeIconUrl = await getImg(songId, 200, 200);
@@ -301,6 +331,15 @@
             songAuthorsElement.textContent = truncateText(songAuthors, 50);
             songNameElement.style.display = 'block'; // Show the song name
             songAuthorsElement.style.display = 'block'; // Show the song authors
+
+            // Get lyrics and display them
+            const lyrics = await get_lyrics(songId);
+            if (lyrics) {
+                lyricsDisplay.textContent = lyrics;
+                lyricsDisplay.style.display = 'block'; // Show the lyrics
+            } else {
+                lyricsDisplay.style.display = 'none'; // Hide the lyrics if not available
+            }
         }
 
         function truncateText(text, maxLength) {
@@ -321,9 +360,26 @@
             const audioPlayer = document.getElementById('audioPlayer');
             audioPlayer.src = ''; // Clear the audio source
             audioPlayer.parentElement.style.display = 'none'; // Hide the audio controls
+            const lyricsDisplay = document.getElementById('lyricsDisplay'); // 获取歌词显示区域
+            lyricsDisplay.style.display = 'none'; // Hide the lyrics
         }
 
         window.onload = clearSelection; // Clear selection on page load
+
+        // 新增 get_lyrics 函数
+        async function get_lyrics(songId) {
+            const url = "https://apis.netstart.cn/music/lyric";
+            const params = new URLSearchParams({ id: songId });
+            try {
+                const response = await fetch(`${url}?${params}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                return data.lrc.lyric; // 返回歌词
+            } catch (error) {
+                console.error(`获取歌词失败，可能歌曲ID ${songId} 不存在或API返回数据格式错误。`, error);
+                return null;
+            }
+        }
     </script>
 </body>
 </html>
