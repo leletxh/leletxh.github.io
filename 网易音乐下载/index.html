@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易音乐搜索播放器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .container {
+            width: 800px; /* Increased width to accommodate longer song names and authors */
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: row;
+        }
+        .search-section {
+            width: 50%; /* Increased width for the search section */
+            padding-right: 20px;
+        }
+        .search-section input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-section button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-section button:hover {
+            background-color: #0056b3;
+        }
+        .song-list {
+            list-style-type: none;
+            padding: 0;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        .song-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .song-item:hover {
+            background-color: #f0f0f0;
+        }
+        .song-item img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .song-details {
+            width: 50%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .large-icon {
+            position: relative;
+            text-align: center;
+            margin-top: 20px; /* 增加上边距 */
+        }
+        .large-icon img {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            display: none; /* Initially hide the large icon */
+        }
+        .audio-controls {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: none; /* Initially hide the audio controls */
+        }
+        .audio-controls audio {
+            width: 100%;
+        }
+        .author-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .author-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 150px;
+            background-color: black;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the text */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .author-tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .authors-container {
+            max-width: 100%; /* Set a maximum width for the container */
+            overflow: hidden;
+            position: relative;
+        }
+        .authors-container span {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .song-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .song-name,
+        .song-authors {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none; /* Initially hide the song name and authors */
+            width: 80%;
+        }
+        .song-name {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-section">
+            <h2>简易音乐搜索播放器</h2>
+            <input type="text" id="searchInput" placeholder="请输入歌曲名...">
+            <button onclick="searchSongs()">搜索</button>
+            <ul id="songList" class="song-list"></ul>
+        </div>
+        <div class="song-details">
+            <div class="song-info">
+                <div class="song-name" id="songName"></div>
+                <div class="song-authors" id="songAuthors"></div>
+            </div>
+            <div class="large-icon" id="largeIcon">
+                <img src="" alt="Large Icon">
+            </div>
+            <div class="audio-controls">
+                <audio id="audioPlayer" controls></audio>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getImg(id, width = null, height = null) {
+            const url = `https://apis.netstart.cn/music/song/detail`;
+            const params = new URLSearchParams({ ids: id });
+            try {
+                const response = await fetch(`${url}?${params}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                let img = data.songs[0].al.picUrl;
+                if (width !== null && height !== null) {
+                    img += `?param=${width}y${height}`;
+                }
+                return img;
+            } catch (error) {
+                console.error(`获取图片失败，可能歌曲ID ${id} 不存在或API返回数据格式错误。`, error);
+                return null;
+            }
+        }
+
+        async function searchSongs() {
+            const songName = document.getElementById('searchInput').value;
+            const num = 10;
+            const url = "https://apis.netstart.cn/music/cloudsearch";
+            const params = new URLSearchParams({ keywords: songName, limit: num });
+            try {
+                const response = await fetch(`${url}?${params}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                const songs = [];
+                for (const item of data.result.songs) {
+                    const artists = item.ar ? item.ar.map(ar => ar.name).join(', ') : '未知艺术家';
+                    const song = {
+                        name: item.name,
+                        authors: artists.split(', '),
+                        ID: item.id,
+                        icon: item.al.picUrl,
+                    };
+                    songs.push(song);
+                }
+                displaySongs(songs);
+            } catch (error) {
+                console.error(`搜索歌曲失败，可能关键词 "${songName}" 不正确或API返回数据格式错误。`, error);
+            }
+        }
+
+        async function getSongDownloadUrl(songId) {
+            const url = "https://apis.netstart.cn/music/song/download/url";
+            const params = new URLSearchParams({ id: songId });
+            try {
+                const response = await fetch(`${url}?${params}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                return data.data.url;
+            } catch (error) {
+                console.error(`获取下载链接失败，可能歌曲ID ${songId} 不存在或API返回数据格式错误。`, error);
+                return null;
+            }
+        }
+
+        function displaySongs(songs) {
+            const songList = document.getElementById('songList');
+            songList.innerHTML = '';
+            songs.forEach(song => {
+                const li = document.createElement('li');
+                li.className = 'song-item';
+                const img = document.createElement('img');
+                img.src = song.icon;
+                li.appendChild(img);
+
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.flexDirection = 'column';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = song.name;
+                div.appendChild(nameSpan);
+
+                const authorsContainer = document.createElement('div');
+                authorsContainer.className = 'authors-container';
+                const authorSpan = document.createElement('span');
+                authorSpan.textContent = song.authors.slice(0, 2).join(', ');
+                if (song.authors.length > 2) {
+                    authorSpan.textContent += ', ...';
+                }
+                authorsContainer.appendChild(authorSpan);
+
+                const authorTooltip = document.createElement('div');
+                authorTooltip.className = 'author-tooltip';
+                const tooltipText = document.createElement('span');
+                tooltipText.className = 'tooltiptext';
+                tooltipText.textContent = song.authors.join(', ');
+                authorTooltip.appendChild(tooltipText);
+                authorsContainer.appendChild(authorTooltip);
+
+                div.appendChild(authorsContainer);
+
+                li.appendChild(div);
+                li.onclick = () => loadSongDetails(song.ID, song.name, song.authors.join(', '));
+                songList.appendChild(li);
+            });
+        }
+
+        async function loadSongDetails(songId, songName, songAuthors) {
+            const largeIcon = document.getElementById('largeIcon').querySelector('img');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const songNameElement = document.getElementById('songName');
+            const songAuthorsElement = document.getElementById('songAuthors');
+
+            // Load large icon
+            const largeIconUrl = await getImg(songId, 200, 200);
+            largeIcon.src = largeIconUrl;
+            largeIcon.style.display = 'block'; // Show the large icon
+
+            // Get download URL and set audio source
+            const downloadUrl = await getSongDownloadUrl(songId);
+            if (downloadUrl) {
+                audioPlayer.src = downloadUrl;
+                audioPlayer.load(); // Reload the audio player to reflect changes
+                audioPlayer.parentElement.style.display = 'block'; // Show the audio controls
+            }
+
+            // Display song info in the respective elements
+            songNameElement.textContent = truncateText(songName, 30);
+            songAuthorsElement.textContent = truncateText(songAuthors, 50);
+            songNameElement.style.display = 'block'; // Show the song name
+            songAuthorsElement.style.display = 'block'; // Show the song authors
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) {
+                return text;
+            }
+            return text.substring(0, maxLength - 3) + '...';
+        }
+
+        function clearSelection() {
+            const songNameElement = document.getElementById('songName');
+            const songAuthorsElement = document.getElementById('songAuthors');
+            songNameElement.style.display = 'none'; // Hide the song name
+            songAuthorsElement.style.display = 'none'; // Hide the song authors
+            const largeIcon = document.getElementById('largeIcon').querySelector('img');
+            largeIcon.src = ''; // Clear the image
+            largeIcon.style.display = 'none'; // Hide the large icon
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = ''; // Clear the audio source
+            audioPlayer.parentElement.style.display = 'none'; // Hide the audio controls
+        }
+
+        window.onload = clearSelection; // Clear selection on page load
+    </script>
+</body>
+</html>
