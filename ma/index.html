@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口算生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .dark-theme {
+            background-color: #333;
+            color: #fff;
+        }
+        .light-theme {
+            background-color: #fff;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: inherit;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            margin-bottom: 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            background-color: inherit;
+            text-align: center;
+            padding: 1em 0;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        .github-link {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .github-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .github-link a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <header>
+            <h1>口算生成器</h1>
+        </header>
+        <main>
+            <p><strong>简介:</strong> 这是一个强大的口算题目生成工具，可以帮助您快速生成适合不同年龄段学生的口算练习题。</p>
+            <h2>主要功能:</h2>
+            <ul>
+                <li>生成口算题目到Word文档</li>
+                <li>支持混合运算（加减乘除）</li>
+                <li>可调整数字范围</li>
+            </ul>
+            <a href="./setup.exe" class="download-btn">下载口算生成器</a>
+            <div class="github-link">
+                <p>项目开源地址: <a href="https://github.com/leletxh/Mental-arithmetic" target="_blank">GitHub</a></p>
+                <p>此项目由个人 <strong>leletxh</strong> 开发并使用 MIT 协议。</p>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 leletxh. All rights reserved.</p>
+        </footer>
+        <div class="theme-toggle" onclick="toggleTheme()">切换主题</div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+            }
+        }
+
+        // Check for saved theme preference and apply it on load
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme') || 'light-theme';
+            document.body.className = savedTheme;
+        };
+
+        // Save the current theme to local storage whenever it changes
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            const currentTheme = document.body.className;
+            localStorage.setItem('theme', currentTheme);
+        });
+    </script>
+</body>
+</html>
+
+
+
