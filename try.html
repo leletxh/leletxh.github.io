@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>P2P 接收端</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    progress { width: 100%; height: 20px; margin-bottom: 10px; }
+    #download-link { display: none; }
+  </style>
+</head>
+<body>
+
+<h2>接收端</h2>
+<p><strong>你的 Peer ID：</strong> <span id="my-id">等待连接...</span></p>
+
+<div id="progress-container" style="display:none;">
+  <p id="file-info"></p>
+  <progress id="progress-bar" value="0" max="100"></progress>
+  <p id="percent-text">0%</p>
+</div>
+
+<a id="download-link" download></a>
+
+<script src="https://unpkg.com/peerjs@1.4.5/dist/peerjs.min.js"></script> 
+<script>
+const peer = new Peer();
+let fileWriter = null;
+let receivedSize = 0;
+let totalSize = 0;
+let fileName = '';
+let receivedChunks = [];
+
+peer.on('open', id => {
+  document.getElementById('my-id').textContent = id;
+});
+
+peer.on('connection', conn => {
+  const log = msg => {
+    const p = document.createElement('p');
+    p.textContent = msg;
+    document.body.appendChild(p);
+  };
+
+  log('🔗 收到来自远程的连接');
+
+  conn.on('data', async data => {
+    if (typeof data === 'string' && data.startsWith('META:')) {
+      const meta = JSON.parse(data.slice(5));
+      fileName = meta.name;
+      totalSize = meta.size;
+
+      document.getElementById('file-info').textContent = `正在接收：${fileName} (${(totalSize / 1024).toFixed(2)} KB)`;
+      document.getElementById('progress-container').style.display = 'block';
+
+      // 尝试使用 showSaveFilePicker（Chrome/Edge）
+      try {
+        const fileHandle = await window.showSaveFilePicker({
+          suggestedName: fileName,
+          types: [{
+            description: 'All Files',
+            accept: {}
+          }]
+        });
+
+        const writable = await fileHandle.createWritable();
+        fileWriter = {
+          writer: writable,
+          received: 0,
+          total: totalSize
+        };
+        log(`💾 已选择保存路径：${fileHandle.name}`);
+      } catch (e) {
+        if (e.name === 'AbortError') {
+          log('⚠️ 用户取消了保存路径选择，将使用默认下载方式');
+        } else if (e.name === 'SecurityError') {
+          log('⚠️ 安全限制阻止操作，请确保是通过点击触发，并且页面是 HTTPS 或 localhost');
+        } else {
+          log(`⚠️ 无法访问本地文件系统：${e.message}，将使用默认下载方式`);
+        }
+
+        receivedChunks = [];
+      }
+
+    } else if (data instanceof ArrayBuffer) {
+      const chunk = new Uint8Array(data);
+
+      receivedSize += chunk.byteLength;
+      const percent = Math.round((receivedSize / totalSize) * 100);
+      document.getElementById('progress-bar').value = percent;
+      document.getElementById('percent-text').textContent = `${percent}%`;
+
+      if (fileWriter) {
+        await fileWriter.writer.write(chunk);
+        fileWriter.received += chunk.byteLength;
+        if (fileWriter.received >= fileWriter.total) {
+          await fileWriter.writer.close();
+          log('✅ 文件已写入指定路径');
+        }
+      } else {
+        receivedChunks.push(chunk.buffer);
+      }
+    }
+
+    if (receivedSize >= totalSize) {
+      if (!fileWriter) {
+        const blob = new Blob(receivedChunks);
+        const url = URL.createObjectURL(blob);
+
+        const a = document.getElementById('download-link');
+        a.href = url;
+        a.download = fileName;
+        a.textContent = `点击下载 "${fileName}"`;
+        a.style.display = 'block';
+        log('✅ 文件已接收完成（默认下载方式）');
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
