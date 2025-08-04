@@ -7,22 +7,22 @@ actions:
     link: /get-started.html
     type: primary
 
-  - text: 介绍
-    link: https://vuejs.press/guide/introduction.html
+  - text: 仓库
+    link: https://github.com/xhc2008/CABM
     type: secondary
 
 features:
   - title: 轻量至上
-    details: 软件超轻量
+    details: 采用精简的架构设计，软件体积小巧，占用系统资源极少，即使在低配置设备上也能流畅运行，为用户提供快速响应的使用体验
   - title: flask 驱动
-    details: 享受 Flask 带来的轻量设计
+    details: 基于轻量级的 Flask 框架构建，拥有简洁的代码结构和高效的性能表现，同时保持良好的可扩展性和维护性
   - title: 高性能
-    details: 大量使用异步编程，提高性能
+    details: 深度集成异步编程技术和多线程处理机制，显著提升并发处理能力，确保在高负载场景下依然保持优异的响应速度
   - title: 自定义角色
-    details: 快速自定义角色
+    details: 提供丰富的角色定制选项，用户可以根据个人喜好自由设置角色的性格特征、语言风格和行为模式，打造独一无二的专属角色
   - title: 表情切换
-    details: 根据回答自动切换表情
+    details: 智能分析对话内容和情感色彩，实时匹配相应的表情动画，让角色表现更加生动自然，增强交互的沉浸感和真实性
   - title: 自定义音色
-    details: 根据的的想法自定义音色
+    details: 支持多种音色选择和个性化调节，用户可以自由调整语速、音调和音质参数，创造符合个人审美和使用习惯的专属语音体验
 
 footer: GPL-3.0 | 版权所有 © 2025-至今

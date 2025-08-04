@@ -5,6 +5,10 @@
 ~~（不就是个Gal吗）~~
 > ## **⚠️ 注意：本项目目前处于开发阶段，核心功能尚未实现，其他的功能和优化也正在进行中。欢迎贡献代码或提出建议。**
 
+## 目录
+
+[[toc]]
+
 ## 开发状态
 
 **已完成功能：**
@@ -73,7 +77,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leletxh/CABM/main/depl
 PowerShell -ExecutionPolicy Bypass -File deploy.ps1
 ```
 
-**[📖 Docker 镜像直接拉取部署指南](/docs/DOCKER_PULL_GUIDE.md)**
+**[📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md)**
 
 #### 源码构建部署
 
@@ -101,9 +105,9 @@ cp .env.docker .env.docker
 ```
 
 **更多部署选项：**
-- [📖 Docker 镜像直接拉取部署指南](/docs/DOCKER_PULL_GUIDE.md)
-- [详细的部署指南](/docs/DOCKER_DEPLOYMENT.md)
-- [问题解决方案](/docs/DOCKER_SOLUTION.md)
+- [📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md)
+- [详细的部署指南](deploy-docs/DOCKER_DEPLOYMENT.md)
+- [问题解决方案](deploy-docs/DOCKER_SOLUTION.md)
 
 #### Docker 管理命令
 
@@ -165,7 +169,7 @@ OPTION_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 OPTION_MODEL=Qwen/Qwen3-32B
 ```
 
-#### 如果你的显卡较好推荐[使用GPT-SoVITS语音合成](docs/TTS_GPTSoVITS.md)
+#### 如果你的显卡较好推荐[使用GPT-SoVITS语音合成](deploy-docs/TTS_GPTSoVITS.md)
 
 ### 🚀 Docker 优势
 
