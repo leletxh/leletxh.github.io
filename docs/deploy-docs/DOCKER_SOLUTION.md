@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: Docker 问题解决方案
+description: CABM 项目 Docker 环境配置的问题总结和解决方案
+---
+
 # Docker 问题解决方案
 
 ## 📝 问题总结

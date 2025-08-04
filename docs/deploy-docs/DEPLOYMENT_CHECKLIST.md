@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: Docker 镜像直接拉取部署验证清单
+description: 使用 Docker 镜像直接拉取部署方案的快速验证清单
+---
+
 # Docker 镜像直接拉取部署 - 快速验证清单
 
 ## 📋 部署验证清单

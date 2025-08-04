@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: Docker 部署指南
+description: CABM 项目的 Docker 部署指南，包含 GitHub Actions 自动构建和本地部署
+---
+
 # Docker 部署指南
 
 ## GitHub Actions 自动构建

@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: Docker 镜像直接拉取部署指南
+description: 详细介绍如何直接拉取预构建的 Docker 镜像来部署 CABM 应用
+---
+
 # Docker 镜像直接拉取部署指南
 
 本指南详细介绍如何直接拉取预构建的 Docker 镜像来部署 CABM 应用，无需本地构建。

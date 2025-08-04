@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: 快速开始
+description: CABM 项目的快速开始指南，包含安装说明和使用教程
+---
+
 # 快速开始
 
 "当灵性注入载体，它便挣脱物质躯壳，抵达超验之境。"
@@ -64,14 +70,14 @@ CABM是一个AI对话应用，具有动态生成的背景图片功能。用户�
 
 无需克隆代码，直接使用预构建镜像：
 
-```bash
+```bash{3}
 # Linux/macOS 一键部署
 curl -o deploy.sh https://raw.githubusercontent.com/leletxh/CABM/main/deploy.sh
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-```powershell
+```powershell{4}
 # Windows PowerShell 一键部署
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leletxh/CABM/main/deploy.ps1" -OutFile "deploy.ps1"
 PowerShell -ExecutionPolicy Bypass -File deploy.ps1
@@ -81,7 +87,7 @@ PowerShell -ExecutionPolicy Bypass -File deploy.ps1
 
 #### 源码构建部署
 
-```bash
+```bash{6}
 # 克隆项目
 git clone https://github.com/leletxh/CABM.git
 cd CABM
@@ -92,7 +98,7 @@ cd CABM
 
 #### 手动部署
 
-```bash
+```bash{6}
 # 1. 配置环境变量
 cp .env.docker .env.docker
 # 编辑 .env.docker 文件，填入你的 API 密钥
@@ -147,7 +153,7 @@ cp .env.example .env
 
 编辑`.env`文件，填写以下信息：
 
-```
+```{3,8,13,18,25}
 # 对话API配置
 CHAT_API_BASE_URL=https://api.siliconflow.cn/v1
 CHAT_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -167,9 +173,21 @@ EMBEDDING_MODEL=BAAI/bge-m3
 OPTION_API_BASE_URL=https://api.siliconflow.cn/v1
 OPTION_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 OPTION_MODEL=Qwen/Qwen3-32B
+
+# TTS服务配置，使用siliconflow必须将参考音频放入static/audio目录下
+# 参考音频文件名为：{角色名}.wav将参考文本放到{角色名}.txt
+TTS_SERVICE_URL_GPTSoVITS=http://127.0.0.1:9880
+TTS_SERVICE_URL_SiliconFlow=https://api.siliconflow.cn/v1
+TTS_SERVICE_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#填写siliconflow或GPT-SoVITS
+TTS_SERVICE_METHOD=siliconflow
 ```
+高亮为必须配置，不配置会影响使用
+
+第25行在选择GPT-SoVITS可以不用配置
 
 #### 如果你的显卡较好推荐[使用GPT-SoVITS语音合成](deploy-docs/TTS_GPTSoVITS.md)
+#### [硅基流动的详细使用说明](deploy-docs/TTS_SIL.md)
 
 ### 🚀 Docker 优势
 

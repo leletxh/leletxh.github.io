@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: CABM Docker 部署文档
+description: 使用 Docker 脚手架工具进行开发、部署和发布的完整指南
+---
+
 # CABM Docker 部署文档
 
 ## 📋 概述

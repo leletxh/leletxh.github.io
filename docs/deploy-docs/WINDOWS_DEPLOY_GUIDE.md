@@ -1,3 +1,9 @@
+---
+lang: zh-CN
+title: CABM Windows 部署指南
+description: 在 Windows 系统上部署和管理 CABM 应用的详细指南
+---
+
 # CABM Windows 部署指南
 
 本指南介绍如何在Windows系统上部署和管理CABM应用。
