@@ -72,24 +72,24 @@ CABM是一个AI对话应用，具有动态生成的背景图片功能。用户�
 
 ```bash{3}
 # Linux/macOS 一键部署
-curl -o deploy.sh https://raw.githubusercontent.com/leletxh/CABM/main/deploy.sh
+curl -o deploy.sh https://raw.githubusercontent.com/xhc2008/CABM/main/deploy.sh
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
 ```powershell{4}
 # Windows PowerShell 一键部署
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leletxh/CABM/main/deploy.ps1" -OutFile "deploy.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/xhc2008/CABM/main/deploy.ps1" -OutFile "deploy.ps1"
 PowerShell -ExecutionPolicy Bypass -File deploy.ps1
 ```
 
-**[📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md)**
+**[📖 Docker 部署详细文档](deploy-docs/DOCKER_PULL_GUIDE.md)**
 
 #### 源码构建部署
 
 ```bash{6}
 # 克隆项目
-git clone https://github.com/leletxh/CABM.git
+git clone https://github.com/xhc2008/CABM.git
 cd CABM
 
 # 一键部署
@@ -104,7 +104,7 @@ cp .env.docker .env.docker
 # 编辑 .env.docker 文件，填入你的 API 密钥
 
 # 2. 启动服务
-./docker-start.sh start
+./deploy-docker.sh start
 
 # 3. 访问应用
 # http://localhost:5000
@@ -112,8 +112,6 @@ cp .env.docker .env.docker
 
 **更多部署选项：**
 - [📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md)
-- [详细的部署指南](deploy-docs/DOCKER_DEPLOYMENT.md)
-- [问题解决方案](deploy-docs/DOCKER_SOLUTION.md)
 
 #### Docker 管理命令
 

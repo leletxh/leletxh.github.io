@@ -8,10 +8,12 @@ description: 详细介绍如何直接拉取预构建的 Docker 镜像来部署 C
 
 本指南详细介绍如何直接拉取预构建的 Docker 镜像来部署 CABM 应用，无需本地构建。
 
+本文档不使用全自动工具，全部为docker直接命令
+
 ## 📦 可用镜像源
 
 ### GitHub Container Registry (推荐)
-- **镜像地址**: `ghcr.io/leletxh/cabm`
+- **镜像地址**: `ghcr.io/xhc2008/cabm`
 - **标签**: `latest`、分支名、commit SHA
 - **架构支持**: `linux/amd64`、`linux/arm64`
 - **优势**: 
@@ -88,7 +90,7 @@ docker run -d --name cabm-app \
   -v $(pwd)/static/images/cache:/app/static/images/cache \
   -v $(pwd)/static/audio:/app/static/audio \
   --restart unless-stopped \
-  ghcr.io/leletxh/cabm:latest
+  ghcr.io/xhc2008/cabm:latest
 ```
 
 #### 4. 验证部署
@@ -118,7 +120,7 @@ version: '3.8'
 
 services:
   cabm:
-    image: ghcr.io/leletxh/cabm:latest
+    image: ghcr.io/xhc2008/cabm:latest
     container_name: cabm-app
     ports:
       - "5000:5000"
@@ -182,7 +184,7 @@ docker stop cabm-app
 docker rm cabm-app
 
 # 拉取最新镜像
-docker pull ghcr.io/leletxh/cabm:latest
+docker pull ghcr.io/xhc2008/cabm:latest
 
 # 重新运行容器（使用之前的命令）
 docker run -d --name cabm-app \
@@ -192,7 +194,7 @@ docker run -d --name cabm-app \
   -v $(pwd)/static/images/cache:/app/static/images/cache \
   -v $(pwd)/static/audio:/app/static/audio \
   --restart unless-stopped \
-  ghcr.io/leletxh/cabm:latest
+  ghcr.io/xhc2008/cabm:latest
 ```
 
 #### 使用 Docker Compose
@@ -216,15 +218,6 @@ docker run -d --name cabm-app \
   # ... 其他参数保持不变
 ```
 
-### 使用外部数据库
-
-如果你有外部 Redis 或其他数据库服务：
-
-```bash
-# 在 .env 文件中添加数据库配置
-echo "REDIS_URL=redis://your-redis-host:6379" >> .env
-```
-
 ### 内存限制
 
 ```bash
@@ -246,27 +239,6 @@ docker run -d --name cabm-app \
   # ... 其他参数
 ```
 
-## 📋 环境变量详解
-
-### 必需配置
-
-| 变量名 | 说明 | 示例值 |
-|--------|------|--------|
-| `CHAT_API_BASE_URL` | 聊天 API 基础 URL | `https://api.siliconflow.cn/v1` |
-| `CHAT_API_KEY` | 聊天 API 密钥 | `sk-xxx` |
-| `CHAT_MODEL` | 聊天模型名称 | `deepseek-ai/DeepSeek-V3` |
-| `IMAGE_API_BASE_URL` | 图像 API 基础 URL | `https://api.siliconflow.cn/v1` |
-| `IMAGE_API_KEY` | 图像 API 密钥 | `sk-xxx` |
-| `IMAGE_MODEL` | 图像模型名称 | `Kwai-Kolors/Kolors` |
-
-### 可选配置
-
-| 变量名 | 说明 | 默认值 |
-|--------|------|---------|
-| `PORT` | 应用端口 | `5000` |
-| `HOST` | 绑定地址 | `0.0.0.0` |
-| `DEBUG` | 调试模式 | `False` |
-| `TTS_SERVICE_METHOD` | TTS 服务方法 | `siliconflow` |
 
 ## 🔍 故障排除
 
@@ -277,10 +249,10 @@ docker run -d --name cabm-app \
 docker pull hello-world
 
 # 手动拉取镜像
-docker pull ghcr.io/leletxh/cabm:latest
+docker pull ghcr.io/xhc2008/cabm:latest
 
 # 如果仍然失败，尝试使用代理
-# docker pull --platform linux/amd64 ghcr.io/leletxh/cabm:latest
+# docker pull --platform linux/amd64 ghcr.io/xhc2008/cabm:latest
 ```
 
 ### 容器启动失败
@@ -388,7 +360,7 @@ fi
 
 # 拉取并运行容器
 echo "🐳 拉取 Docker 镜像..."
-docker pull ghcr.io/leletxh/cabm:latest
+docker pull ghcr.io/xhc2008/cabm:latest
 
 echo "🚀 启动容器..."
 docker run -d --name cabm-app \
@@ -398,7 +370,7 @@ docker run -d --name cabm-app \
   -v $(pwd)/static/images/cache:/app/static/images/cache \
   -v $(pwd)/static/audio:/app/static/audio \
   --restart unless-stopped \
-  ghcr.io/leletxh/cabm:latest
+  ghcr.io/xhc2008/cabm:latest
 
 # 检查部署状态
 echo "✅ 部署完成！"
@@ -420,7 +392,7 @@ chmod +x deploy.sh
 
 ```bash
 # 下载并运行一键部署脚本
-curl -o deploy.sh https://raw.githubusercontent.com/leletxh/CABM/main/deploy.sh
+curl -o deploy.sh https://raw.githubusercontent.com/xhc2008/CABM/main/deploy.sh
 chmod +x deploy.sh
 ./deploy.sh
 ```
