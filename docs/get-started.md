@@ -77,7 +77,7 @@ chmod +x deploy.sh
 ./deploy.sh
 ```
 
-```powershell{4}
+```powershell{3}
 # Windows PowerShell 一键部署
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/xhc2008/CABM/main/deploy.ps1" -OutFile "deploy.ps1"
 PowerShell -ExecutionPolicy Bypass -File deploy.ps1
