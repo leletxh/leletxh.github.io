@@ -19,10 +19,10 @@ description: 在 Windows 系统上部署和管理 CABM 应用的详细指南
 - 备用Docker部署
 
 ### 方式二：Conda专用启动
-双击运行 `start-conda.bat`，专门使用Conda环境：
+双击运行 `启动沙雕UI第二代.bat`，专门使用Conda环境：
 - 创建独立的`.conda`环境
 - 安装所需依赖
-- 直接启动应用
+- 打开管理GUI
 
 ### 方式三：图形化管理界面
 运行PowerShell命令：
