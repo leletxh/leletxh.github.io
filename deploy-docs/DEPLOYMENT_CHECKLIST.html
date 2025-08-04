@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <title>Docker 镜像直接拉取部署 - 快速验证清单 | VuePress</title><meta name="description" content="My first VuePress Site">
+    <link rel="preload" href="/assets/style-B3-VMakp.css" as="style"><link rel="stylesheet" href="/assets/style-B3-VMakp.css">
+    <link rel="modulepreload" href="/assets/app-GG1NClW5.js"><link rel="modulepreload" href="/assets/DEPLOYMENT_CHECKLIST.html-C4qLFlYA.js">
+    <link rel="prefetch" href="/assets/index.html-CgINDDyB.js" as="script"><link rel="prefetch" href="/assets/get-started.html-BcidgrGE.js" as="script"><link rel="prefetch" href="/assets/DOCKER_DEPLOYMENT.html-D3t8pc7Q.js" as="script"><link rel="prefetch" href="/assets/DOCKER_DEPLOY_GUIDE.html-DJGBAkw7.js" as="script"><link rel="prefetch" href="/assets/DOCKER_PULL_GUIDE.html-UR1-_Bjv.js" as="script"><link rel="prefetch" href="/assets/DOCKER_SOLUTION.html-DtcIe7wB.js" as="script"><link rel="prefetch" href="/assets/TTS_GPTSoVITS.html-DptTjN28.js" as="script"><link rel="prefetch" href="/assets/WINDOWS_DEPLOY_GUIDE.html-sLMBjX_p.js" as="script"><link rel="prefetch" href="/assets/404.html-BkavOFco.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container external-link-icon" vp-container><!--[--><header class="vp-navbar" vp-navbar><div class="vp-toggle-sidebar-button" title="toggle sidebar" aria-expanded="false" role="button" tabindex="0"><div class="icon" aria-hidden="true"><span></span><span></span><span></span></div></div><span><a class="route-link" href="/"><img class="vp-site-logo" src="https://vuejs.press/images/hero.png" alt="VuePress"><span class="vp-site-name vp-hide-mobile" aria-hidden="true">VuePress</span></a></span><div class="vp-navbar-items-wrapper" style=""><!--[--><!--]--><nav class="vp-navbar-items vp-hide-mobile" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="CABM"><!--[--><!--[--><!--]--><!--]-->CABM<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="快速开始"><!--[--><!--[--><!--]--><!--]-->快速开始<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><button type="button" class="vp-toggle-color-mode-button" title="toggle color mode"><svg class="light-icon" viewbox="0 0 32 32" style=""><path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path></svg><svg class="dark-icon" viewbox="0 0 32 32" style="display:none;"><path d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z" fill="currentColor"></path></svg></button><!----></div></header><!--]--><div class="vp-sidebar-mask"></div><!--[--><aside class="vp-sidebar" vp-sidebar><nav class="vp-navbar-items" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="CABM"><!--[--><!--[--><!--]--><!--]-->CABM<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="快速开始"><!--[--><!--[--><!--]--><!--]-->快速开始<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><ul class="vp-sidebar-items"><!--[--><li><p tabindex="0" class="vp-sidebar-item vp-sidebar-heading">Docker 镜像直接拉取部署 - 快速验证清单 <!----></p><!----></li><!--]--></ul><!--[--><!--]--></aside><!--]--><!--[--><main class="vp-page"><!--[--><!--]--><div vp-content><!--[--><!--]--><div><h1 id="docker-镜像直接拉取部署-快速验证清单" tabindex="-1"><a class="header-anchor" href="#docker-镜像直接拉取部署-快速验证清单"><span>Docker 镜像直接拉取部署 - 快速验证清单</span></a></h1><h2 id="📋-部署验证清单" tabindex="-1"><a class="header-anchor" href="#📋-部署验证清单"><span>📋 部署验证清单</span></a></h2><p>在使用新的直接拉取部署方案之前，请确认以下项目：</p><h3 id="✅-系统要求" tabindex="-1"><a class="header-anchor" href="#✅-系统要求"><span>✅ 系统要求</span></a></h3><ul><li>[ ] Docker 已安装并运行</li><li>[ ] 端口 5000 未被占用</li><li>[ ] 具有互联网连接（用于拉取镜像）</li></ul><h3 id="✅-部署步骤验证" tabindex="-1"><a class="header-anchor" href="#✅-部署步骤验证"><span>✅ 部署步骤验证</span></a></h3><h4 id="方式一-一键脚本部署" tabindex="-1"><a class="header-anchor" href="#方式一-一键脚本部署"><span>方式一：一键脚本部署</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Linux/macOS</span></span>
+<span class="line"><span class="token function">curl</span> <span class="token parameter variable">-o</span> deploy.sh https://raw.githubusercontent.com/leletxh/CABM/main/deploy.sh</span>
+<span class="line"><span class="token function">chmod</span> +x deploy.sh</span>
+<span class="line">./deploy.sh</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-powershell line-numbers-mode" data-highlighter="prismjs" data-ext="powershell"><pre><code><span class="line"><span class="token comment"># Windows PowerShell</span></span>
+<span class="line"><span class="token function">Invoke-WebRequest</span> <span class="token operator">-</span>Uri <span class="token string">&quot;https://raw.githubusercontent.com/leletxh/CABM/main/deploy.ps1&quot;</span> <span class="token operator">-</span>OutFile <span class="token string">&quot;deploy.ps1&quot;</span></span>
+<span class="line">PowerShell <span class="token operator">-</span>ExecutionPolicy Bypass <span class="token operator">-</span>File deploy<span class="token punctuation">.</span>ps1</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="方式二-手动-docker-命令" tabindex="-1"><a class="header-anchor" href="#方式二-手动-docker-命令"><span>方式二：手动 Docker 命令</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 1. 创建工作目录和配置</span></span>
+<span class="line"><span class="token function">mkdir</span> cabm-app <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> cabm-app</span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> data static/images/cache static/audio</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 2. 创建 .env 文件（参考 .env.example）</span></span>
+<span class="line"><span class="token comment"># 3. 运行容器</span></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-p</span> <span class="token number">5000</span>:5000 <span class="token punctuation">\</span></span>
+<span class="line">  --env-file .env <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/data:/app/data <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/images/cache:/app/static/images/cache <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/audio:/app/static/audio <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">--restart</span> unless-stopped <span class="token punctuation">\</span></span>
+<span class="line">  ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="方式三-docker-compose" tabindex="-1"><a class="header-anchor" href="#方式三-docker-compose"><span>方式三：Docker Compose</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 使用提供的 docker-compose.yml</span></span>
+<span class="line"><span class="token function">docker-compose</span> up <span class="token parameter variable">-d</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="✅-部署后验证" tabindex="-1"><a class="header-anchor" href="#✅-部署后验证"><span>✅ 部署后验证</span></a></h3><ul><li>[ ] 容器成功启动：<code>docker ps | grep cabm-app</code></li><li>[ ] 应用可访问：打开 http://localhost:5000</li><li>[ ] 日志无错误：<code>docker logs cabm-app</code></li><li>[ ] API 配置正确：能够正常聊天和生成图片</li></ul><h3 id="✅-功能测试" tabindex="-1"><a class="header-anchor" href="#✅-功能测试"><span>✅ 功能测试</span></a></h3><ul><li>[ ] 基本对话功能</li><li>[ ] 图片生成功能</li><li>[ ] 角色切换功能</li><li>[ ] 记忆系统功能（可选）</li><li>[ ] TTS 语音功能（可选）</li></ul><h3 id="🔧-故障排除" tabindex="-1"><a class="header-anchor" href="#🔧-故障排除"><span>🔧 故障排除</span></a></h3><p>如果遇到问题，请检查：</p><ol><li><code>.env</code> 文件中的 API 密钥是否正确</li><li>网络连接是否正常</li><li>Docker 服务是否运行</li><li>端口是否被占用</li><li>查看详细日志：<code>docker logs -f cabm-app</code></li></ol><h3 id="📚-相关文档" tabindex="-1"><a class="header-anchor" href="#📚-相关文档"><span>📚 相关文档</span></a></h3><ul><li><a class="route-link" href="/deploy-docs/DOCKER_PULL_GUIDE.html">Docker 镜像直接拉取部署指南</a></li><li><a class="route-link" href="/deploy-docs/DOCKER_DEPLOY_GUIDE.html">Docker 部署指南</a></li><li><a class="route-link" href="/deploy-docs/WINDOWS_DEPLOY_GUIDE.html">Windows 部署指南</a></li><li><a class="route-link" href="/deploy-docs/DOCKER_SOLUTION.html">故障排除指南</a></li></ul><hr><h2 id="🚀-快速命令参考" tabindex="-1"><a class="header-anchor" href="#🚀-快速命令参考"><span>🚀 快速命令参考</span></a></h2><h3 id="容器管理" tabindex="-1"><a class="header-anchor" href="#容器管理"><span>容器管理</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 查看状态</span></span>
+<span class="line"><span class="token function">docker</span> <span class="token function">ps</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 查看日志</span></span>
+<span class="line"><span class="token function">docker</span> logs <span class="token parameter variable">-f</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 重启容器</span></span>
+<span class="line"><span class="token function">docker</span> restart cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 停止容器</span></span>
+<span class="line"><span class="token function">docker</span> stop cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 删除容器</span></span>
+<span class="line"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 更新镜像</span></span>
+<span class="line"><span class="token function">docker</span> pull ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="数据管理" tabindex="-1"><a class="header-anchor" href="#数据管理"><span>数据管理</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 备份数据</span></span>
+<span class="line"><span class="token function">tar</span> <span class="token parameter variable">-czf</span> cabm-backup-<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%Y%m%d<span class="token variable">)</span></span>.tar.gz data/</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 恢复数据</span></span>
+<span class="line"><span class="token function">tar</span> <span class="token parameter variable">-xzf</span> cabm-backup-YYYYMMDD.tar.gz</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="系统监控" tabindex="-1"><a class="header-anchor" href="#系统监控"><span>系统监控</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 查看资源使用</span></span>
+<span class="line"><span class="token function">docker</span> stats cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 查看端口占用</span></span>
+<span class="line"><span class="token function">netstat</span> <span class="token parameter variable">-tlnp</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token number">5000</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 检查磁盘空间</span></span>
+<span class="line"><span class="token function">df</span> <span class="token parameter variable">-h</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div><!--[--><!--]--></div><footer class="vp-page-meta"><!----><div class="vp-meta-item git-info"><div class="vp-meta-item last-updated"><span class="meta-item-label">Last Updated:: </span><time class="meta-item-info" datetime="2025-08-04T11:29:52.000Z" data-allow-mismatch>8/4/25, 11:29 AM</time></div><div class="vp-meta-item contributors"><span class="meta-item-label">Contributors: </span><span class="meta-item-info"><!--[--><!--[--><span class="contributor" title="email: 2302_76329346@noreply.gitcode.com">2302_76329346</span><!----><!--]--><!--]--></span></div></div></footer><!----><!--[--><!--]--></main><!--]--></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-GG1NClW5.js" defer></script>
+  </body>
+</html>

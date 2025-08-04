@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <title>Docker 镜像直接拉取部署指南 | VuePress</title><meta name="description" content="My first VuePress Site">
+    <link rel="preload" href="/assets/style-B3-VMakp.css" as="style"><link rel="stylesheet" href="/assets/style-B3-VMakp.css">
+    <link rel="modulepreload" href="/assets/app-GG1NClW5.js"><link rel="modulepreload" href="/assets/DOCKER_PULL_GUIDE.html-UR1-_Bjv.js">
+    <link rel="prefetch" href="/assets/index.html-CgINDDyB.js" as="script"><link rel="prefetch" href="/assets/get-started.html-BcidgrGE.js" as="script"><link rel="prefetch" href="/assets/DEPLOYMENT_CHECKLIST.html-C4qLFlYA.js" as="script"><link rel="prefetch" href="/assets/DOCKER_DEPLOYMENT.html-D3t8pc7Q.js" as="script"><link rel="prefetch" href="/assets/DOCKER_DEPLOY_GUIDE.html-DJGBAkw7.js" as="script"><link rel="prefetch" href="/assets/DOCKER_SOLUTION.html-DtcIe7wB.js" as="script"><link rel="prefetch" href="/assets/TTS_GPTSoVITS.html-DptTjN28.js" as="script"><link rel="prefetch" href="/assets/WINDOWS_DEPLOY_GUIDE.html-sLMBjX_p.js" as="script"><link rel="prefetch" href="/assets/404.html-BkavOFco.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container external-link-icon" vp-container><!--[--><header class="vp-navbar" vp-navbar><div class="vp-toggle-sidebar-button" title="toggle sidebar" aria-expanded="false" role="button" tabindex="0"><div class="icon" aria-hidden="true"><span></span><span></span><span></span></div></div><span><a class="route-link" href="/"><img class="vp-site-logo" src="https://vuejs.press/images/hero.png" alt="VuePress"><span class="vp-site-name vp-hide-mobile" aria-hidden="true">VuePress</span></a></span><div class="vp-navbar-items-wrapper" style=""><!--[--><!--]--><nav class="vp-navbar-items vp-hide-mobile" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="CABM"><!--[--><!--[--><!--]--><!--]-->CABM<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="快速开始"><!--[--><!--[--><!--]--><!--]-->快速开始<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><button type="button" class="vp-toggle-color-mode-button" title="toggle color mode"><svg class="light-icon" viewbox="0 0 32 32" style=""><path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path></svg><svg class="dark-icon" viewbox="0 0 32 32" style="display:none;"><path d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z" fill="currentColor"></path></svg></button><!----></div></header><!--]--><div class="vp-sidebar-mask"></div><!--[--><aside class="vp-sidebar" vp-sidebar><nav class="vp-navbar-items" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="CABM"><!--[--><!--[--><!--]--><!--]-->CABM<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="快速开始"><!--[--><!--[--><!--]--><!--]-->快速开始<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><ul class="vp-sidebar-items"><!--[--><li><p tabindex="0" class="vp-sidebar-item vp-sidebar-heading">Docker 镜像直接拉取部署指南 <!----></p><!----></li><!--]--></ul><!--[--><!--]--></aside><!--]--><!--[--><main class="vp-page"><!--[--><!--]--><div vp-content><!--[--><!--]--><div><h1 id="docker-镜像直接拉取部署指南" tabindex="-1"><a class="header-anchor" href="#docker-镜像直接拉取部署指南"><span>Docker 镜像直接拉取部署指南</span></a></h1><p>本指南详细介绍如何直接拉取预构建的 Docker 镜像来部署 CABM 应用，无需本地构建。</p><h2 id="📦-可用镜像源" tabindex="-1"><a class="header-anchor" href="#📦-可用镜像源"><span>📦 可用镜像源</span></a></h2><h3 id="github-container-registry-推荐" tabindex="-1"><a class="header-anchor" href="#github-container-registry-推荐"><span>GitHub Container Registry (推荐)</span></a></h3><ul><li><strong>镜像地址</strong>: <code>ghcr.io/leletxh/cabm</code></li><li><strong>标签</strong>: <code>latest</code>、分支名、commit SHA</li><li><strong>架构支持</strong>: <code>linux/amd64</code>、<code>linux/arm64</code></li><li><strong>优势</strong>: <ul><li>与源码同步构建</li><li>支持多架构</li><li>无需额外配置</li><li>自动安全扫描</li></ul></li></ul><h2 id="🚀-快速部署" tabindex="-1"><a class="header-anchor" href="#🚀-快速部署"><span>🚀 快速部署</span></a></h2><h3 id="方法一-docker-run-命令" tabindex="-1"><a class="header-anchor" href="#方法一-docker-run-命令"><span>方法一：Docker Run 命令</span></a></h3><h4 id="_1-准备环境配置" tabindex="-1"><a class="header-anchor" href="#_1-准备环境配置"><span>1. 准备环境配置</span></a></h4><p>创建工作目录并配置环境变量：</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 创建工作目录</span></span>
+<span class="line"><span class="token function">mkdir</span> cabm-app <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 创建环境配置文件</span></span>
+<span class="line"><span class="token function">cat</span> <span class="token operator">&gt;</span> .env <span class="token operator">&lt;&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="line"># API 配置（必需）</span>
+<span class="line">CHAT_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">CHAT_API_KEY=your_api_key_here</span>
+<span class="line">CHAT_MODEL=deepseek-ai/DeepSeek-V3</span>
+<span class="line"></span>
+<span class="line">IMAGE_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">IMAGE_API_KEY=your_api_key_here</span>
+<span class="line">IMAGE_MODEL=Kwai-Kolors/Kolors</span>
+<span class="line"></span>
+<span class="line">OPTION_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">OPTION_API_KEY=your_api_key_here</span>
+<span class="line">OPTION_MODEL=Qwen/Qwen3-8B</span>
+<span class="line"></span>
+<span class="line">MEMORY_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">MEMORY_API_KEY=your_api_key_here</span>
+<span class="line">EMBEDDING_MODEL=BAAI/bge-m3</span>
+<span class="line">RERANKER_MODEL=BAAI/bge-reranker-v2-m3</span>
+<span class="line"></span>
+<span class="line"># TTS 配置（可选）</span>
+<span class="line">TTS_SERVICE_URL_GPTSoVITS=http://127.0.0.1:9880</span>
+<span class="line">TTS_SERVICE_URL_SiliconFlow=https://api.siliconflow.cn/v1</span>
+<span class="line">TTS_SERVICE_API_KEY=your_api_key_here</span>
+<span class="line">TTS_SERVICE_METHOD=siliconflow</span>
+<span class="line"></span>
+<span class="line"># 应用配置</span>
+<span class="line">DEBUG=False</span>
+<span class="line">PORT=5000</span>
+<span class="line">HOST=0.0.0.0</span>
+<span class="line">EOF</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 编辑 .env 文件，填入你的实际 API 密钥</span></span>
+<span class="line"><span class="token function">nano</span> .env  <span class="token comment"># 或使用其他编辑器</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-创建数据目录" tabindex="-1"><a class="header-anchor" href="#_2-创建数据目录"><span>2. 创建数据目录</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 创建持久化数据目录</span></span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> data/history data/memory data/scenes</span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> static/images/cache</span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> static/audio</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_3-运行容器" tabindex="-1"><a class="header-anchor" href="#_3-运行容器"><span>3. 运行容器</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 拉取并运行最新版本</span></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-p</span> <span class="token number">5000</span>:5000 <span class="token punctuation">\</span></span>
+<span class="line">  --env-file .env <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/data:/app/data <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/images/cache:/app/static/images/cache <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/audio:/app/static/audio <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">--restart</span> unless-stopped <span class="token punctuation">\</span></span>
+<span class="line">  ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_4-验证部署" tabindex="-1"><a class="header-anchor" href="#_4-验证部署"><span>4. 验证部署</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 检查容器状态</span></span>
+<span class="line"><span class="token function">docker</span> <span class="token function">ps</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 查看启动日志</span></span>
+<span class="line"><span class="token function">docker</span> logs <span class="token parameter variable">-f</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 访问应用</span></span>
+<span class="line"><span class="token builtin class-name">echo</span> <span class="token string">&quot;应用已启动，请访问: http://localhost:5000&quot;</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="方法二-docker-compose" tabindex="-1"><a class="header-anchor" href="#方法二-docker-compose"><span>方法二：Docker Compose</span></a></h3><h4 id="_1-创建-docker-compose-yml" tabindex="-1"><a class="header-anchor" href="#_1-创建-docker-compose-yml"><span>1. 创建 docker-compose.yml</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 创建工作目录</span></span>
+<span class="line"><span class="token function">mkdir</span> cabm-app <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 创建 docker-compose.yml 文件</span></span>
+<span class="line"><span class="token function">cat</span> <span class="token operator">&gt;</span> docker-compose.yml <span class="token operator">&lt;&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="line">version: &#39;3.8&#39;</span>
+<span class="line"></span>
+<span class="line">services:</span>
+<span class="line">  cabm:</span>
+<span class="line">    image: ghcr.io/leletxh/cabm:latest</span>
+<span class="line">    container_name: cabm-app</span>
+<span class="line">    ports:</span>
+<span class="line">      - &quot;5000:5000&quot;</span>
+<span class="line">    env_file:</span>
+<span class="line">      - .env</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./data:/app/data</span>
+<span class="line">      - ./static/images/cache:/app/static/images/cache</span>
+<span class="line">      - ./static/audio:/app/static/audio</span>
+<span class="line">    restart: unless-stopped</span>
+<span class="line">    healthcheck:</span>
+<span class="line">      test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:5000/health&quot;]</span>
+<span class="line">      interval: 30s</span>
+<span class="line">      timeout: 10s</span>
+<span class="line">      retries: 3</span>
+<span class="line">      start_period: 40s</span>
+<span class="line">EOF</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-配置环境变量" tabindex="-1"><a class="header-anchor" href="#_2-配置环境变量"><span>2. 配置环境变量</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 创建环境配置文件（同上面的 .env 文件内容）</span></span>
+<span class="line"><span class="token comment"># 参考方法一中的环境配置步骤</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_3-启动服务" tabindex="-1"><a class="header-anchor" href="#_3-启动服务"><span>3. 启动服务</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 创建数据目录</span></span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> data/history data/memory data/scenes</span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> static/images/cache</span>
+<span class="line"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> static/audio</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 启动服务</span></span>
+<span class="line"><span class="token function">docker-compose</span> up <span class="token parameter variable">-d</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 查看服务状态</span></span>
+<span class="line"><span class="token function">docker-compose</span> <span class="token function">ps</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 查看日志</span></span>
+<span class="line"><span class="token function">docker-compose</span> logs <span class="token parameter variable">-f</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="🔄-镜像版本管理" tabindex="-1"><a class="header-anchor" href="#🔄-镜像版本管理"><span>🔄 镜像版本管理</span></a></h2><h3 id="可用标签" tabindex="-1"><a class="header-anchor" href="#可用标签"><span>可用标签</span></a></h3><ul><li><code>latest</code>: 最新稳定版本（主分支最新构建）</li><li><code>main-{commit_sha}</code>: 主分支特定提交版本</li><li><code>{branch_name}</code>: 特定分支的最新版本</li><li><code>{custom_tag}</code>: 手动发布的版本标签</li></ul><h3 id="更新镜像" tabindex="-1"><a class="header-anchor" href="#更新镜像"><span>更新镜像</span></a></h3><h4 id="使用-docker-run" tabindex="-1"><a class="header-anchor" href="#使用-docker-run"><span>使用 Docker Run</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 停止当前容器</span></span>
+<span class="line"><span class="token function">docker</span> stop cabm-app</span>
+<span class="line"><span class="token function">docker</span> <span class="token function">rm</span> cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 拉取最新镜像</span></span>
+<span class="line"><span class="token function">docker</span> pull ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 重新运行容器（使用之前的命令）</span></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-p</span> <span class="token number">5000</span>:5000 <span class="token punctuation">\</span></span>
+<span class="line">  --env-file .env <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/data:/app/data <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/images/cache:/app/static/images/cache <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/static/audio:/app/static/audio <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">--restart</span> unless-stopped <span class="token punctuation">\</span></span>
+<span class="line">  ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="使用-docker-compose" tabindex="-1"><a class="header-anchor" href="#使用-docker-compose"><span>使用 Docker Compose</span></a></h4><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 拉取最新镜像</span></span>
+<span class="line"><span class="token function">docker-compose</span> pull</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 重启服务</span></span>
+<span class="line"><span class="token function">docker-compose</span> up <span class="token parameter variable">-d</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="🔧-高级配置" tabindex="-1"><a class="header-anchor" href="#🔧-高级配置"><span>🔧 高级配置</span></a></h2><h3 id="自定义端口" tabindex="-1"><a class="header-anchor" href="#自定义端口"><span>自定义端口</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 修改端口映射</span></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">-p</span> <span class="token number">8080</span>:5000 <span class="token punctuation">\</span>  <span class="token comment"># 映射到主机的 8080 端口</span></span>
+<span class="line">  <span class="token comment"># ... 其他参数保持不变</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="使用外部数据库" tabindex="-1"><a class="header-anchor" href="#使用外部数据库"><span>使用外部数据库</span></a></h3><p>如果你有外部 Redis 或其他数据库服务：</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 在 .env 文件中添加数据库配置</span></span>
+<span class="line"><span class="token builtin class-name">echo</span> <span class="token string">&quot;REDIS_URL=redis://your-redis-host:6379&quot;</span> <span class="token operator">&gt;&gt;</span> .env</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="内存限制" tabindex="-1"><a class="header-anchor" href="#内存限制"><span>内存限制</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 限制容器内存使用</span></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">--memory</span><span class="token operator">=</span>2g <span class="token punctuation">\</span></span>
+<span class="line">  --memory-swap<span class="token operator">=</span>2g <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token comment"># ... 其他参数</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="网络配置" tabindex="-1"><a class="header-anchor" href="#网络配置"><span>网络配置</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 使用自定义网络</span></span>
+<span class="line"><span class="token function">docker</span> network create cabm-network</span>
+<span class="line"></span>
+<span class="line"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span> cabm-app <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token parameter variable">--network</span> cabm-network <span class="token punctuation">\</span></span>
+<span class="line">  <span class="token comment"># ... 其他参数</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="📋-环境变量详解" tabindex="-1"><a class="header-anchor" href="#📋-环境变量详解"><span>📋 环境变量详解</span></a></h2><h3 id="必需配置" tabindex="-1"><a class="header-anchor" href="#必需配置"><span>必需配置</span></a></h3><table><thead><tr><th>变量名</th><th>说明</th><th>示例值</th></tr></thead><tbody><tr><td><code>CHAT_API_BASE_URL</code></td><td>聊天 API 基础 URL</td><td><code>https://api.siliconflow.cn/v1</code></td></tr><tr><td><code>CHAT_API_KEY</code></td><td>聊天 API 密钥</td><td><code>sk-xxx</code></td></tr><tr><td><code>CHAT_MODEL</code></td><td>聊天模型名称</td><td><code>deepseek-ai/DeepSeek-V3</code></td></tr><tr><td><code>IMAGE_API_BASE_URL</code></td><td>图像 API 基础 URL</td><td><code>https://api.siliconflow.cn/v1</code></td></tr><tr><td><code>IMAGE_API_KEY</code></td><td>图像 API 密钥</td><td><code>sk-xxx</code></td></tr><tr><td><code>IMAGE_MODEL</code></td><td>图像模型名称</td><td><code>Kwai-Kolors/Kolors</code></td></tr></tbody></table><h3 id="可选配置" tabindex="-1"><a class="header-anchor" href="#可选配置"><span>可选配置</span></a></h3><table><thead><tr><th>变量名</th><th>说明</th><th>默认值</th></tr></thead><tbody><tr><td><code>PORT</code></td><td>应用端口</td><td><code>5000</code></td></tr><tr><td><code>HOST</code></td><td>绑定地址</td><td><code>0.0.0.0</code></td></tr><tr><td><code>DEBUG</code></td><td>调试模式</td><td><code>False</code></td></tr><tr><td><code>TTS_SERVICE_METHOD</code></td><td>TTS 服务方法</td><td><code>siliconflow</code></td></tr></tbody></table><h2 id="🔍-故障排除" tabindex="-1"><a class="header-anchor" href="#🔍-故障排除"><span>🔍 故障排除</span></a></h2><h3 id="镜像拉取失败" tabindex="-1"><a class="header-anchor" href="#镜像拉取失败"><span>镜像拉取失败</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 检查网络连接</span></span>
+<span class="line"><span class="token function">docker</span> pull hello-world</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 手动拉取镜像</span></span>
+<span class="line"><span class="token function">docker</span> pull ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 如果仍然失败，尝试使用代理</span></span>
+<span class="line"><span class="token comment"># docker pull --platform linux/amd64 ghcr.io/leletxh/cabm:latest</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="容器启动失败" tabindex="-1"><a class="header-anchor" href="#容器启动失败"><span>容器启动失败</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 查看详细错误信息</span></span>
+<span class="line"><span class="token function">docker</span> logs cabm-app</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 检查环境变量</span></span>
+<span class="line"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> cabm-app <span class="token function">env</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-E</span> <span class="token string">&quot;(API_KEY|API_BASE_URL)&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 进入容器调试</span></span>
+<span class="line"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> cabm-app /bin/bash</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="应用无法访问" tabindex="-1"><a class="header-anchor" href="#应用无法访问"><span>应用无法访问</span></a></h3><ol><li>检查端口映射是否正确</li><li>检查防火墙设置</li><li>检查容器网络配置</li></ol><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 检查端口占用</span></span>
+<span class="line"><span class="token function">netstat</span> <span class="token parameter variable">-tlnp</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token number">5000</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 检查容器网络</span></span>
+<span class="line"><span class="token function">docker</span> inspect cabm-app <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-A</span> <span class="token number">10</span> NetworkSettings</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="数据持久化问题" tabindex="-1"><a class="header-anchor" href="#数据持久化问题"><span>数据持久化问题</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 检查数据卷挂载</span></span>
+<span class="line"><span class="token function">docker</span> inspect cabm-app <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-A</span> <span class="token number">10</span> Mounts</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 确保目录权限正确</span></span>
+<span class="line"><span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">755</span> ./data ./static</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="📚-相关文档" tabindex="-1"><a class="header-anchor" href="#📚-相关文档"><span>📚 相关文档</span></a></h2><ul><li><a class="route-link" href="/deploy-docs/DOCKER_DEPLOY_GUIDE.html">DOCKER_DEPLOY_GUIDE.md</a> - 完整 Docker 部署指南</li><li><a class="route-link" href="/deploy-docs/WINDOWS_DEPLOY_GUIDE.html">WINDOWS_DEPLOY_GUIDE.md</a> - Windows 部署指南</li><li><a class="route-link" href="/deploy-docs/TTS_GPTSoVITS.html">TTS_GPTSoVITS.md</a> - TTS 服务配置指南</li></ul><h2 id="⚡-一键部署脚本" tabindex="-1"><a class="header-anchor" href="#⚡-一键部署脚本"><span>⚡ 一键部署脚本</span></a></h2><p>创建一个快速部署脚本：</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token function">cat</span> <span class="token operator">&gt;</span> deploy.sh <span class="token operator">&lt;&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="line">#!/bin/bash</span>
+<span class="line"></span>
+<span class="line">echo &quot;🚀 CABM Docker 快速部署脚本&quot;</span>
+<span class="line">echo &quot;==============================&quot;</span>
+<span class="line"></span>
+<span class="line"># 检查 Docker 是否安装</span>
+<span class="line">if ! command -v docker &amp;&gt; /dev/null; then</span>
+<span class="line">    echo &quot;❌ Docker 未安装，请先安装 Docker&quot;</span>
+<span class="line">    exit 1</span>
+<span class="line">fi</span>
+<span class="line"></span>
+<span class="line"># 创建工作目录</span>
+<span class="line">echo &quot;📁 创建工作目录...&quot;</span>
+<span class="line">mkdir -p cabm-app &amp;&amp; cd cabm-app</span>
+<span class="line">mkdir -p data/history data/memory data/scenes</span>
+<span class="line">mkdir -p static/images/cache static/audio</span>
+<span class="line"></span>
+<span class="line"># 创建环境配置文件</span>
+<span class="line">echo &quot;⚙️  创建配置文件...&quot;</span>
+<span class="line">if [ ! -f .env ]; then</span>
+<span class="line">    cat &gt; .env &lt;&lt; &#39;ENVEOF&#39;</span>
+<span class="line"># API 配置（请修改为你的实际密钥）</span>
+<span class="line">CHAT_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">CHAT_API_KEY=your_api_key_here</span>
+<span class="line">CHAT_MODEL=deepseek-ai/DeepSeek-V3</span>
+<span class="line"></span>
+<span class="line">IMAGE_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">IMAGE_API_KEY=your_api_key_here</span>
+<span class="line">IMAGE_MODEL=Kwai-Kolors/Kolors</span>
+<span class="line"></span>
+<span class="line">OPTION_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">OPTION_API_KEY=your_api_key_here</span>
+<span class="line">OPTION_MODEL=Qwen/Qwen3-8B</span>
+<span class="line"></span>
+<span class="line">MEMORY_API_BASE_URL=https://api.siliconflow.cn/v1</span>
+<span class="line">MEMORY_API_KEY=your_api_key_here</span>
+<span class="line">EMBEDDING_MODEL=BAAI/bge-m3</span>
+<span class="line">RERANKER_MODEL=BAAI/bge-reranker-v2-m3</span>
+<span class="line"></span>
+<span class="line"># TTS 配置（可选）</span>
+<span class="line">TTS_SERVICE_METHOD=siliconflow</span>
+<span class="line">TTS_SERVICE_URL_SiliconFlow=https://api.siliconflow.cn/v1</span>
+<span class="line">TTS_SERVICE_API_KEY=your_api_key_here</span>
+<span class="line"></span>
+<span class="line"># 应用配置</span>
+<span class="line">DEBUG=False</span>
+<span class="line">PORT=5000</span>
+<span class="line">HOST=0.0.0.0</span>
+<span class="line">ENVEOF</span>
+<span class="line">    echo &quot;📝 请编辑 .env 文件，填入你的 API 密钥&quot;</span>
+<span class="line">    echo &quot;   nano .env&quot;</span>
+<span class="line">    read -p &quot;配置完成后按 Enter 继续...&quot;</span>
+<span class="line">fi</span>
+<span class="line"></span>
+<span class="line"># 拉取并运行容器</span>
+<span class="line">echo &quot;🐳 拉取 Docker 镜像...&quot;</span>
+<span class="line">docker pull ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span>
+<span class="line">echo &quot;🚀 启动容器...&quot;</span>
+<span class="line">docker run -d --name cabm-app \</span>
+<span class="line">  -p 5000:5000 \</span>
+<span class="line">  --env-file .env \</span>
+<span class="line">  -v $(pwd)/data:/app/data \</span>
+<span class="line">  -v $(pwd)/static/images/cache:/app/static/images/cache \</span>
+<span class="line">  -v $(pwd)/static/audio:/app/static/audio \</span>
+<span class="line">  --restart unless-stopped \</span>
+<span class="line">  ghcr.io/leletxh/cabm:latest</span>
+<span class="line"></span>
+<span class="line"># 检查部署状态</span>
+<span class="line">echo &quot;✅ 部署完成！&quot;</span>
+<span class="line">echo &quot;📊 容器状态：&quot;</span>
+<span class="line">docker ps | grep cabm-app</span>
+<span class="line"></span>
+<span class="line">echo &quot;&quot;</span>
+<span class="line">echo &quot;🌐 访问地址: http://localhost:5000&quot;</span>
+<span class="line">echo &quot;📋 管理命令:&quot;</span>
+<span class="line">echo &quot;   查看日志: docker logs -f cabm-app&quot;</span>
+<span class="line">echo &quot;   停止服务: docker stop cabm-app&quot;</span>
+<span class="line">echo &quot;   重启服务: docker restart cabm-app&quot;</span>
+<span class="line">EOF</span></span>
+<span class="line"></span>
+<span class="line"><span class="token function">chmod</span> +x deploy.sh</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>使用部署脚本：</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># 下载并运行一键部署脚本</span></span>
+<span class="line"><span class="token function">curl</span> <span class="token parameter variable">-o</span> deploy.sh https://raw.githubusercontent.com/leletxh/CABM/main/deploy.sh</span>
+<span class="line"><span class="token function">chmod</span> +x deploy.sh</span>
+<span class="line">./deploy.sh</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div><!--[--><!--]--></div><footer class="vp-page-meta"><!----><div class="vp-meta-item git-info"><div class="vp-meta-item last-updated"><span class="meta-item-label">Last Updated:: </span><time class="meta-item-info" datetime="2025-08-04T11:29:52.000Z" data-allow-mismatch>8/4/25, 11:29 AM</time></div><div class="vp-meta-item contributors"><span class="meta-item-label">Contributors: </span><span class="meta-item-info"><!--[--><!--[--><span class="contributor" title="email: 2302_76329346@noreply.gitcode.com">2302_76329346</span><!----><!--]--><!--]--></span></div></div></footer><!----><!--[--><!--]--></main><!--]--></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-GG1NClW5.js" defer></script>
+  </body>
+</html>
