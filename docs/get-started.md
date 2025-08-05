@@ -412,7 +412,8 @@ def get_character_config():
 - [Docker 问题解决方案](deploy-docs/DOCKER_SOLUTION.md) - 常见问题及解决方案
 
 ### 功能文档
-- [TTS GPT-SoVITS 配置](deploy-docs/TTS_GPTSoVITS.md) - 语音合成服务配置
+- [TTS GPT-SoVITS 配置](deploy-docs/TTS_GPTSoVITS.md) - GPT-SoVITS语音合成服务配置
+- [TTS GPT-SoVITS 配置](deploy-docs/TTS_SILDLC.md) - 进阶版硅基流动语音合成服务配置
 
 ### 开发文档
 - [贡献指南](CONTRIBUTING.md) - 如何参与项目开发
