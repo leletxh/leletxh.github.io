@@ -337,8 +337,6 @@ def get_character_config():
 
 ### 部署文档
 - [📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md) - **推荐：无需源码，直接拉取镜像部署**
-- [Docker 部署指南](deploy-docs/DOCKER_DEPLOY_GUIDE.md) - 完整的 Docker 部署指南
-- [Docker 部署方案](deploy-docs/DOCKER_DEPLOYMENT.md) - Docker 部署详细说明
 - [Windows 部署指南](deploy-docs/WINDOWS_DEPLOY_GUIDE.md) - Windows 环境部署
 - [Docker 问题解决方案](deploy-docs/DOCKER_SOLUTION.md) - 常见问题及解决方案
 
