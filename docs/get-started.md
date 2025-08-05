@@ -125,6 +125,77 @@ cp .env.docker .env.docker
 ./docker-start.sh cleanup    # 清理资源
 ```
 
+### 📦 conda安装方式
+
+使用conda可以更好地管理Python环境和依赖包，推荐有conda使用经验的用户选择此方式。
+
+#### 1. 克隆项目
+
+```bash
+git clone https://github.com/xhc2008/CABM.git
+cd CABM
+```
+
+#### 2. 创建conda环境
+
+```bash
+# 创建新的conda环境，Python版本3.10+
+conda create -n cabm python=3.11
+```
+
+#### 3. 激活环境
+
+```bash
+# 激活conda环境
+conda activate cabm
+```
+
+#### 4. 安装依赖
+
+```bash
+# 使用pip安装项目依赖
+pip install -r requirements.txt
+```
+
+或者如果项目提供了conda环境文件，也可以使用：
+
+```bash
+conda env create -f environment.yml -p .conda
+```
+
+#### 5. 配置环境变量
+
+按照下方"配置环境变量"部分的说明进行配置。
+
+#### 6. 启动应用
+
+```bash
+# 确保conda环境已激活
+conda activate cabm
+
+# 启动应用
+python start.py
+```
+
+#### conda环境管理
+
+```bash
+# 激活环境
+conda activate cabm
+
+# 退出环境
+conda deactivate
+
+# 删除环境（如需重新安装）
+conda remove -p .conda --all
+
+# 查看已安装的包
+conda list
+
+# 导出环境配置
+conda env export > environment.yml
+```
+
 ### 📦 传统安装方式
 
 #### 1. 安装依赖
@@ -205,7 +276,7 @@ TTS_SERVICE_METHOD=siliconflow
 - 1GB+ 可用存储空间
 
 #### 传统环境
-- Python 3.8+
+- Python 3.10+
 - 硬盘空间 500MB+
 - 网络连接（用于API调用）
 
