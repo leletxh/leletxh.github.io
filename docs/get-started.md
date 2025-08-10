@@ -110,6 +110,11 @@ cp .env.docker .env.docker
 # http://localhost:5000
 ```
 
+#### 配置环境变量
+
+按照下方[配置环境变量](#_2-配置环境变量)部分的说明进行配置。
+也可以在UI中配置
+
 **更多部署选项：**
 - [📖 Docker 镜像直接拉取部署指南](deploy-docs/DOCKER_PULL_GUIDE.md)
 
@@ -125,9 +130,9 @@ cp .env.docker .env.docker
 ./docker-start.sh cleanup    # 清理资源
 ```
 
-### 📦 conda安装方式
+### 📦 node安装方式
 
-使用conda可以更好地管理Python环境和依赖包，推荐有conda使用经验的用户选择此方式。
+使用node可以使用UI，推荐有node使用经验的用户选择此方式。
 
 #### 1. 克隆项目
 
@@ -135,6 +140,29 @@ cp .env.docker .env.docker
 git clone https://github.com/xhc2008/CABM.git
 cd CABM
 ```
+
+#### 2. 运行安装命令
+
+```bash
+npm run install:python:node
+```
+
+#### 3. 启动方式
+
+```bash
+npm run electron:start
+```
+
+#### 4. 配置环境变量
+
+按照下方[配置环境变量](#_2-配置环境变量)部分的说明进行配置。
+也可以在UI中配置
+
+### 📦 conda安装方式
+
+使用conda可以更好地管理Python环境和依赖包，推荐有conda使用经验的用户选择此方式。
+
+
 
 #### 2. 创建conda环境
 
@@ -163,9 +191,11 @@ pip install -r requirements.txt
 conda env create -f environment.yml -p .conda
 ```
 
+
 #### 5. 配置环境变量
 
 按照下方[配置环境变量](#_2-配置环境变量)部分的说明进行配置。
+也可以在UI中配置
 
 #### 6. 启动应用
 
@@ -412,8 +442,7 @@ def get_character_config():
 - [Docker 问题解决方案](deploy-docs/DOCKER_SOLUTION.md) - 常见问题及解决方案
 
 ### 功能文档
-- [TTS GPT-SoVITS 配置](deploy-docs/TTS_GPTSoVITS.md) - GPT-SoVITS语音合成服务配置
-- [TTS GPT-SoVITS 配置](deploy-docs/TTS_SILDLC.md) - 进阶版硅基流动语音合成服务配置
+- [TTS GPT-SoVITS 配置](deploy-docs/TTS_GPTSoVITS.md) - 语音合成服务配置
 
 ### 开发文档
 - [贡献指南](CONTRIBUTING.md) - 如何参与项目开发
