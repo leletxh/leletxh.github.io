@@ -73,7 +73,26 @@ CABM（Code Afflatus & Beyond Matter）是一个融合先进AI技术的沉浸式
 
 ## 安装说明
 
-### 🐳 Docker 快速部署（推荐）
+### 📦 一键包，较为推荐，极简
+
+使用类似软件一样的UI，老奶奶都能够部署（某位不愿透漏真名的作者说的）
+
+#### 1. 下载压缩包
+
+从原版下载[戳我打开发布页面](https://github.com/leletxh/CABM-run/releases)
+
+下载做新版的`.zip`文件
+
+解压，点击`启动器.exe`就行了
+
+##### 冷知识，如果你打不开上面的页面，不妨看看[如何加速](deploy-docs/VISTR_GITHUB.md)
+
+#### 2. 配置环境变量
+
+可以在弹出的窗口设置
+也按照下方[配置环境变量](#_2-配置环境变量)部分的说明进行配置。
+
+### 🐳 Docker 快速部署（推荐，但要软件）
 
 #### 🚀 直接拉取镜像部署（最简单）
 
@@ -138,34 +157,6 @@ cp .env.docker .env.docker
 ./docker-start.sh package    # 打包镜像
 ./docker-start.sh cleanup    # 清理资源
 ```
-
-### 📦 node安装方式
-
-使用node可以使用UI，推荐有node使用经验的用户选择此方式。
-
-#### 1. 克隆项目
-
-```bash
-git clone https://github.com/xhc2008/CABM.git
-cd CABM
-```
-
-#### 2. 运行安装命令
-
-```bash
-npm run install:python:node
-```
-
-#### 3. 启动方式
-
-```bash
-npm run electron:start
-```
-
-#### 4. 配置环境变量
-
-按照下方[配置环境变量](#_2-配置环境变量)部分的说明进行配置。
-也可以在UI中配置
 
 ### 📦 conda安装方式
 
