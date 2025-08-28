@@ -3,7 +3,7 @@ lang: zh-CN
 home: true
 title: CABM
 description: 轻量级 AI 对话应用，采用 Flask 驱动，支持高性能、自定义角色、表情切换和自定义音色
-# heroImage: https://vuejs.press/images/hero.png
+heroImage: https://vuejs.press/images/hero.png
 actions:
   - text: 马上开始
     link: /get-started.html
@@ -27,4 +27,4 @@ features:
   - title: 自定义音色
     details: 支持多种音色选择和个性化调节，用户可以自由调整语速、音调和音质参数，创造符合个人审美和使用习惯的专属语音体验
 
-footer: GPL-3.0 | 版权所有 © 2025-至今
+footer: Copyright © 2025 The CABM Contributors. Source code available under GNU GPL-3.0.
