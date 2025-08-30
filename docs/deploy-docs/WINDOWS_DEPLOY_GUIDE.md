@@ -11,12 +11,10 @@ description: 在 Windows 系统上部署和管理 CABM 应用的详细指南
 ## 🚀 快速开始
 
 ### 方式一：一键启动（推荐）
-双击运行 `start-windows.bat`，脚本将自动：
-- 优先使用Conda部署（推荐）
-- 检查并安装Python环境
-- 自动配置依赖
-- 启动应用
-- 备用Docker部署
+
+从[这里下载一键启动压缩包](https://cabm.furinasdog.top/get-started.html#%F0%9F%93%A6-%E4%B8%80%E9%94%AE%E5%8C%85-%E8%BE%83%E4%B8%BA%E6%8E%A8%E8%8D%90-%E6%9E%81%E7%AE%80)
+
+双击运行 `启动器.exe`，将自动下载内容
 
 ### 方式二：Conda专用启动
 双击运行 `启动沙雕UI第二代.bat`，专门使用Conda环境：
@@ -24,14 +22,7 @@ description: 在 Windows 系统上部署和管理 CABM 应用的详细指南
 - 安装所需依赖
 - 打开管理GUI
 
-### 方式三：图形化管理界面
-运行PowerShell命令：
-```powershell
-.\cabm-gui.ps1
-```
-提供直观的图形界面来管理应用，支持Conda和Docker两种方式。
-
-### 方式四：完整安装向导
+### 方式三：完整安装向导
 运行PowerShell命令：
 ```powershell
 .\install-windows.ps1
